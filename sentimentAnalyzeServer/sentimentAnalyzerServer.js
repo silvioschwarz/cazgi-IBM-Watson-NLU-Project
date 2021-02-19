@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 dotenv.config();
 
-function get NLUInstance() {
+function getNLUInstance() {
     let api_key = process.env.API_KEY;
     let api_url = process.env.API_URL;
 
@@ -26,24 +26,78 @@ app.use(express.static('client'))
 const cors_app = require('cors');
 app.use(cors_app());
 
+const analyzeParams = {
+  'url': 'www.ibm.com',
+  'features': {
+    'concepts': {
+      'limit': 3
+    }
+  }
+};
+
+
 app.get("/",(req,res)=>{
     res.render('index.html');
   });
 
 app.get("/url/emotion", (req,res) => {
+   getNLUInstance({
+        'url': req,
+        'features': {
+            'emotion':{
+                'targets': [
+                    'stocks'
+                    ]
+                }
+            }
+        }
+    )
 
     return res.send({"happy":"90","sad":"10"});
 });
 
 app.get("/url/sentiment", (req,res) => {
+    getNLUInstance({
+        'url': req,
+        'features': {
+            'sentiment':{
+                'targets': [
+                    'stocks'
+                    ]
+                }
+            }
+        }
+    )
     return res.send("url sentiment for "+req.query.url);
 });
 
 app.get("/text/emotion", (req,res) => {
+   getNLUInstance({
+        'text': req,
+        'features': {
+            'emotion':{
+                'targets': [
+                    'stocks'
+                    ]
+                }
+            }
+        }
+    )
     return res.send({"happy":"10","sad":"90"});
 });
 
 app.get("/text/sentiment", (req,res) => {
+    getNLUInstance({
+        'text': req,
+        'features': {
+            'sentiment':{
+                'targets': [
+                    'stocks'
+                    ]
+                }
+            }
+        }
+    )
     return res.send("text sentiment for "+req.query.text);
 });
 

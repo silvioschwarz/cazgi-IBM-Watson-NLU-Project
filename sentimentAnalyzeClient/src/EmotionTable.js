@@ -11,6 +11,7 @@ class EmotionTable extends React.Component {
             <tbody>
             {
                 //Write code to use the .map method that you worked on in the Hands-on React lab to extract the emotions
+                ,map
             }
             </tbody>
           </table>
